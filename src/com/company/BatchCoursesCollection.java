@@ -1,12 +1,15 @@
 package com.company;
 
+
+import java.util.ArrayList;
+
 public class BatchCoursesCollection {
 
     private int NumberOfCourses;
-    private BatchCourseDetails[] batchCourseDetails ;
+    private ArrayList<BatchCourseDetails> batchCourseDetails ;
     private TimeTable timeTable;
 
-    public BatchCoursesCollection(int numberOfCourses, BatchCourseDetails[] batchCourseDetails) {
+    public BatchCoursesCollection(int numberOfCourses, ArrayList<BatchCourseDetails> batchCourseDetails) {
         NumberOfCourses = numberOfCourses;
         this.batchCourseDetails = batchCourseDetails;
     }
@@ -15,11 +18,11 @@ public class BatchCoursesCollection {
         return NumberOfCourses;
     }
 
-    public BatchCourseDetails[] getBatchCourseDetails() {
+    public ArrayList<BatchCourseDetails> getBatchCourseDetails() {
         return batchCourseDetails;
     }
 
-    public void ComputeTimeTable(){
+    public void ComputeTimeTable() {
 
         int currentPreference = 1;
         int currentSlot = 1;
@@ -31,69 +34,72 @@ public class BatchCoursesCollection {
                 if ((mbatchCourseDetails.getPreference()) == currentPreference) {
 
                     int numberOfSlots = mbatchCourseDetails.getNumberOfSlots();
-                    Slot[] slots = mbatchCourseDetails.getSlots();
+                    ArrayList<Slot> slots = mbatchCourseDetails.getSlots();
 
-                    String timePreferred = slots[currentSlot].getTimePreference();
-                    String dayPreferred = slots[currentSlot].getDayPreference();
-                    int duration = slots[currentSlot].getDuration();
-
-                    String[] timePreferences = new String[7];
-
-                    int i = 0, j = 0;
-
-                    while (timePreferred != null) {
-                        if (((i * 4) - 1) > timePreferred.lastIndexOf(timePreferred)) break;
-                        timePreferences[i] = timePreferred.substring(i * 4, (i + 1) * 4);
-                        i++;
-                    }
-
-                    String[][] day = null;
-                    day[0] = timeTable.getMonday();
-                    day[1] = timeTable.getMonday();
-                    day[2] = timeTable.getMonday();
-                    day[3] = timeTable.getMonday();
-                    day[4] = timeTable.getMonday();
-                    day[5] = timeTable.getMonday();
+                    ArrayList<String> timePreferred = slots.get(currentSlot).getTimePreference();
+                    ArrayList<Integer> dayPreferred = slots.get(currentSlot).getDayPreference();
+                    int duration = slots.get(currentSlot).getDuration();
 
 
-                    //day = timeTable.getMonday();
+                    String[][] day = timeTable.getWeek();
+
                     boolean slotAvailable = false;
 
-                    if (timePreferred != null) {
+                    //Start of 1st/3rd attempt
 
-                        for (i = 0; i < 6; i++) {                                                                                         //allDaysOfTheWeek
+                    for (String time : timePreferred){
 
-                            for (j = 0; j < 7; j++) {                                                                                    //allSlotsInADay
+                        int timeInt = SlotToInt(time);
 
+                        for( Integer integer : dayPreferred){
 
-                                int p = 1;
-                                while (p <= duration) {
-
-                                    if (day[i][j + p - 1].isEmpty() && p == duration) {
-                                        slotAvailable = true;
-                                    }
-
+                                if (day[integer-1][timeInt-1].isEmpty()){
+                                    slotAvailable=true;
                                 }
-                                if (slotAvailable) break;
+                        }
+                        //End of 1st Attempt
+
+                        //Start of 2nd/4th attempt
+
+                            for( Integer integer : dayPreferred){
+
+                                for (int i = 0;i<7;i++){
+
+                                    if((integer-1) == i)continue;
+                                    if (day[i][timeInt-1].isEmpty()){
+                                        slotAvailable=true;
+                                    }
+                                }
+                            }
+
+                        //end of 2nd attempt
+                    }
+                    //Attempt 4 best day
+                    for( Integer integer : dayPreferred){
+
+                        for (int i = 0;i<7;i++){
+
+                            if (day[integer-1][i].isEmpty()){
+                                slotAvailable=true;
                             }
                         }
-
-                        if (slotAvailable) break;
-
                     }
-
-                    else {
-
-                    }
-
 
                 }
-
-
             }
-
         }
+    }
 
+    private int SlotToInt(String time){
+        int timeInt=0;
+        if (time.equals("0900")) timeInt=1;
+        if (time.equals("1000")) timeInt=2;
+        if (time.equals("1115")) timeInt=3;
+        if (time.equals("1215")) timeInt=4;
+        if (time.equals("0300")) timeInt=5;
+        if (time.equals("0400")) timeInt=6;
+        if (time.equals("0500")) timeInt=7;
+        return timeInt;
     }
 
     public void DisplayTimeTable (){

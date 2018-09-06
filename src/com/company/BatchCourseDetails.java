@@ -1,12 +1,14 @@
 package com.company;
 
+import java.util.ArrayList;
+
 public class BatchCourseDetails extends Course {
 
     private String FacultyName;
     private int Preference;
     private int NumberOfSlots;
-    private Slot[] slots;
-    private AllotedSlot[] allotedSlots;
+    private ArrayList<Slot> slots;
+    private ArrayList<AllotedSlot> allotedSlots;
 
     public BatchCourseDetails(String courseName, String courseCode, String facultyName, int preference, int numberOfSlots) {
         super(courseName, courseCode);
@@ -27,15 +29,15 @@ public class BatchCourseDetails extends Course {
         return NumberOfSlots;
     }
 
-    public Slot[] getSlots() {
+    public ArrayList<Slot> getSlots() {
         return slots;
     }
 
-    public void setSlots(Slot[] slots) {
+    public void setSlots(ArrayList<Slot> slots) {
         this.slots = slots;
     }
 
-    public void setAllotedSlots(AllotedSlot[] allotedSlots) {
+    public void setAllotedSlots(ArrayList<AllotedSlot> allotedSlots) {
         this.allotedSlots = allotedSlots;
     }
 }

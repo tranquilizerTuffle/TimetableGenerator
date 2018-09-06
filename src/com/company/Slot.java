@@ -1,11 +1,13 @@
 package com.company;
 
+import java.util.ArrayList;
+
 public class Slot {
     private int Duration;
-    private String DayPreference;
-    private String TimePreference;
+    private ArrayList<Integer> DayPreference;
+    private ArrayList<String> TimePreference;
 
-    public Slot(int duration, String dayPreference, String timePreference) {
+    public Slot(int duration, ArrayList<Integer> dayPreference, ArrayList<String> timePreference) {
         Duration = duration;
         DayPreference = dayPreference;
         TimePreference = timePreference;
@@ -15,11 +17,20 @@ public class Slot {
         return Duration;
     }
 
-    public String getDayPreference() {
+    @Override
+    public String toString() {
+        return "Slot{" +
+                "Duration=" + Duration +
+                ", DayPreference=" + DayPreference +
+                ", TimePreference=" + TimePreference +
+                '}';
+    }
+
+    public ArrayList<Integer> getDayPreference() {
         return DayPreference;
     }
 
-    public String getTimePreference() {
+    public ArrayList<String> getTimePreference() {
         return TimePreference;
     }
 }
