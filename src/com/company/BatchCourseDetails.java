@@ -17,6 +17,7 @@ public class BatchCourseDetails extends Course {
         NumberOfSlots = numberOfSlots;
     }
 
+    public  String getCourseCode(){ return  super.getCourseCode();}
     public String getFacultyName() {
         return FacultyName;
     }

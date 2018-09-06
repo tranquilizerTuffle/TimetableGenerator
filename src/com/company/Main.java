@@ -26,11 +26,11 @@ public class Main {
                    String facultyName = scanner.next();
                    int preference = scanner.nextInt();
                    int numberOfSlots = scanner.nextInt();
-
                    batchCourseDetails.add(j,new BatchCourseDetails(courseName, courseCode, facultyName,
                            preference, numberOfSlots) );
 
                    ArrayList<Slot> slots = new ArrayList<Slot>();
+
 
                    for(int k=0 ;k< numberOfSlots ; k++){
 
@@ -65,16 +65,14 @@ public class Main {
                        slots.add(k, new Slot(duration, dayPref, timePref));
 
                    }
-                   System.out.println(courseName);
-                   System.out.println(slots.toString());
-                   System.out.println(courseCode);
                    batchCourseDetails.get(j).setSlots(slots);
                }
 
                batchCoursesCollection = new BatchCoursesCollection(numberOfCourses,batchCourseDetails);
 
-              // batchCoursesCollection.ComputeTimeTable();
+               batchCoursesCollection.ComputeTimeTable();
                batchCoursesCollection.DisplayTimeTable();
+
 
            }
 

@@ -2,11 +2,20 @@ package com.company;
 
 public class Course {
 
-    protected String CourseName;
-    protected String CourseCode;
+    private String CourseName;
+    private String CourseCode;
 
     public Course(String courseName, String courseCode) {
         CourseName = courseName;
         CourseCode = courseCode;
     }
+
+    public String getCourseName() {
+        return CourseName;
+    }
+
+    public String getCourseCode() {
+        return CourseCode;
+    }
+
 }
